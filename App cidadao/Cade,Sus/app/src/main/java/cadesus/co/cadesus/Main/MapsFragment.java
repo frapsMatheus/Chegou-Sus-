@@ -1,4 +1,4 @@
-package cadesus.co.cadesus;
+package cadesus.co.cadesus.Main;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -17,6 +17,9 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+
+import cadesus.co.cadesus.LoginActivity;
+import cadesus.co.cadesus.R;
 
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
 

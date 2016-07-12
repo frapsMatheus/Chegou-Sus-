@@ -1,7 +1,7 @@
-package cadesus.co.cadesus.Main;
+package cadesus.co.cadesus.PostosComRemedio;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,21 +9,24 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.places.Places;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import cadesus.co.cadesus.R;
 
 /**
  * Created by fraps on 7/11/16.
  */
-public class MainActivity extends AppCompatActivity
+public class PostosComRemedioActivity extends AppCompatActivity
 {
+
     ViewPager mViewPager;
-    MainPagerAdapter mAdapter;
+    PostosComRemedioAdapter mAdapter;
     Toolbar mToolbar;
-    private GoogleApiClient mClient;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity
         mToolbar.setTitleTextColor(textColor);
         setSupportActionBar(mToolbar);
 
-        mAdapter = new MainPagerAdapter(getSupportFragmentManager());
+        mAdapter = new PostosComRemedioAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager)findViewById(R.id.pager);
         mViewPager.setAdapter(mAdapter);
 
@@ -48,21 +51,9 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setTabTextColors(ColorStateList.valueOf(textColor));
 
-        mClient = new GoogleApiClient
-                .Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .build();
+
+
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mClient.connect();
-    }
-    @Override
-    protected void onStop() {
-        mClient.disconnect();
-        super.onStop();
-    }
+
 }
