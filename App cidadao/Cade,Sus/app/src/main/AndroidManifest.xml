@@ -49,10 +49,10 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".PostosComRemedio.PostosComRemedioActivity"></activity>
 
         <activity
-            android:name=".Main.MainActivity"
-            android:label="@string/title_activity_maps">
+            android:name=".Main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
