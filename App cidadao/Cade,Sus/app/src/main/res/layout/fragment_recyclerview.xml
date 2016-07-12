@@ -10,7 +10,7 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_media_play"
+        android:src="@drawable/common_ic_googleplayservices"
         fab:fab_colorNormal="#252525"
         fab:fab_colorPressed="#A4B8A1"
         fab:fab_colorRipple="#A3B860"

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "468435626906",
+    "firebase_url": "https://onyx-segment-136923.firebaseio.com",
+    "project_id": "onyx-segment-136923",
+    "storage_bucket": "onyx-segment-136923.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:468435626906:android:bab855db261d73ee",
+        "android_client_info": {
+          "package_name": "cadesus.co.cadesus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "468435626906-ah4cflqa6spjtbelkttagj9a7nm2rtn7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cadesus.co.cadesus",
+            "certificate_hash": "A3938265A2096E89D65C2E83501B27F60C930FDE"
+          }
+        },
+        {
+          "client_id": "468435626906-n2vaedk0sn53j2jg41v37tluev4biftc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0xOlMSDYjN81OWmEE_LkPO-sL_XHTjc8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "468435626906-n2vaedk0sn53j2jg41v37tluev4biftc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
