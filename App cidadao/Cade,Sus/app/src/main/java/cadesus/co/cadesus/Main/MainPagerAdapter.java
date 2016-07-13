@@ -14,7 +14,7 @@ import cadesus.co.cadesus.MeusRemedios;
  */
 public class MainPagerAdapter extends FragmentStatePagerAdapter {
 
-    private final ArrayList<String> mFragmentTitleList = new ArrayList<>();
+    public final ArrayList<Fragment> mFragments = new ArrayList<>();
 
     public MainPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -25,9 +25,11 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
     {
         switch (position){
             case 1:
-                return new MeusRemedios();
+                mFragments.add(1,new MeusRemedios());
+                return mFragments.get(1);
             default:
-                return new MapsFragment();
+                mFragments.add(new MapsFragment());
+                return mFragments.get(0);
         }
     }
 

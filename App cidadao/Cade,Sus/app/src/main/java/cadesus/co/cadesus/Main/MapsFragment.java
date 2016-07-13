@@ -21,6 +21,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
+import cadesus.co.cadesus.DB;
 import cadesus.co.cadesus.LoginActivity;
 import cadesus.co.cadesus.PostosComRemedio.PostosComRemedioActivity;
 import cadesus.co.cadesus.R;
@@ -54,15 +55,32 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_maps, container, false);
         mLoginButton = (Button) view.findViewById(R.id.map_login_button);
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PostosComRemedioActivity.class);
-                startActivity(intent);
-            }
-        });
         mapView = (MapView) view.findViewById(R.id.map);
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setupLogin();
+    }
+
+    public void setupLogin()
+    {
+        if (mLoginButton != null) {
+            if (DB.shared().isLoggedUser()) {
+                mLoginButton.setVisibility(View.GONE);
+            } else {
+                mLoginButton.setVisibility(View.VISIBLE);
+                mLoginButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        }
     }
 
     @Override
@@ -76,6 +94,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         super.onResume();
         mapView.onResume();
         initializeMap();
+        setupLogin();
     }
 
     @Override

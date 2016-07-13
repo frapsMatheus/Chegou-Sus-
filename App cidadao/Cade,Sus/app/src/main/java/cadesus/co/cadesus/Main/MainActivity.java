@@ -8,10 +8,14 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
 
+import cadesus.co.cadesus.DB;
 import cadesus.co.cadesus.R;
 
 /**
@@ -22,6 +26,8 @@ public class MainActivity extends AppCompatActivity
     ViewPager mViewPager;
     MainPagerAdapter mAdapter;
     Toolbar mToolbar;
+    TabLayout mTabLayout;
+    Button mLogOut;
     private GoogleApiClient mClient;
 
     @Override
@@ -43,9 +49,18 @@ public class MainActivity extends AppCompatActivity
         mViewPager = (ViewPager)findViewById(R.id.pager);
         mViewPager.setAdapter(mAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabBar);
-        tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.setTabTextColors(ColorStateList.valueOf(textColor));
+        mTabLayout = (TabLayout) findViewById(R.id.tabBar);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setTabTextColors(ColorStateList.valueOf(textColor));
+
+        mLogOut = (Button)findViewById(R.id.toolbar_logout);
+        mLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DB.shared().logOutUser();
+                prepareViews();
+            }
+        });
 
         mClient = new GoogleApiClient
                 .Builder(this)
@@ -58,7 +73,29 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         mClient.connect();
+        prepareViews();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        prepareViews();
+    }
+
+    private void prepareViews()
+    {
+        if (mAdapter.mFragments.size() > 0) {
+            ((MapsFragment) mAdapter.mFragments.get(0)).setupLogin();
+        }
+        if (DB.shared().isLoggedUser()) {
+            mTabLayout.setVisibility(View.VISIBLE);
+            mLogOut.setVisibility(View.VISIBLE);
+        } else {
+            mTabLayout.setVisibility(View.GONE);
+            mLogOut.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     protected void onStop() {
         mClient.disconnect();
