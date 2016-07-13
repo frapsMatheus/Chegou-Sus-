@@ -12,22 +12,22 @@
         android:id="@+id/imageView" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/login_email"
         android:hint="Email"
-        android:layout_marginTop="8dp"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:layout_margin="8dp" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/login_password"
         android:hint="Senha"
-        android:layout_marginTop="8dp" />
+        android:layout_margin="8dp" />
 
     <LinearLayout
         android:orientation="horizontal"

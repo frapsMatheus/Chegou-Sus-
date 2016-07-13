@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="pref_key_logout"
+        android:title="@string/logout" />
+
+    <PreferenceCategory
+        android:title="@string/categoria_localizacao"
+        android:key="pref_key_localizacao">
+        <Preference
+            android:key="pref_key_casa"
+            android:dependency="pref_key_localizacao"
+            android:summary="@string/selecionar_minha_casa_descricao"
+            android:title="@string/selecionar_minha_casa" />
+        <Preference
+            android:key="pref_key_meus_postos"
+            android:dependency="pref_key_localizacao"
+            android:summary="@string/postos_preferidos_descricao"
+            android:title="@string/postos_preferidos" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

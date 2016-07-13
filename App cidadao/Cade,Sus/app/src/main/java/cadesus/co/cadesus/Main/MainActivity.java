@@ -1,22 +1,21 @@
 package cadesus.co.cadesus.Main;
 
-import android.content.res.ColorStateList;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
 
-import cadesus.co.cadesus.DB;
+import cadesus.co.cadesus.DB.DBLogin;
 import cadesus.co.cadesus.R;
+import cadesus.co.cadesus.Settings.SettingsActivity;
 
 /**
  * Created by fraps on 7/11/16.
@@ -36,13 +35,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         mToolbar = (Toolbar)findViewById(R.id.tool_bar);
-        int textColor;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            textColor = getResources().getColor(R.color.colorText,null);
-        } else {
-            textColor = getResources().getColor(R.color.colorText);
-        }
-        mToolbar.setTitleTextColor(textColor);
         setSupportActionBar(mToolbar);
 
         mAdapter = new MainPagerAdapter(getSupportFragmentManager());
@@ -51,14 +43,13 @@ public class MainActivity extends AppCompatActivity
 
         mTabLayout = (TabLayout) findViewById(R.id.tabBar);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabTextColors(ColorStateList.valueOf(textColor));
 
         mLogOut = (Button)findViewById(R.id.toolbar_logout);
         mLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DB.shared().logOutUser();
-                prepareViews();
+                Intent myIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(myIntent);
             }
         });
 
@@ -87,12 +78,13 @@ public class MainActivity extends AppCompatActivity
         if (mAdapter.mFragments.size() > 0) {
             ((MapsFragment) mAdapter.mFragments.get(0)).setupLogin();
         }
-        if (DB.shared().isLoggedUser()) {
+        if (DBLogin.shared().isLoggedUser()) {
             mTabLayout.setVisibility(View.VISIBLE);
             mLogOut.setVisibility(View.VISIBLE);
         } else {
             mTabLayout.setVisibility(View.GONE);
             mLogOut.setVisibility(View.GONE);
+            mViewPager.setCurrentItem(0);
         }
     }
 

@@ -1,26 +1,25 @@
-package cadesus.co.cadesus;
+package cadesus.co.cadesus.DB;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import cadesus.co.cadesus.Login.LoginCallback;
 
 /**
  * Created by fraps on 7/13/16.
  */
-public class DB {
+public class DBLogin {
 
-    private static DB mDB = null;
+    private static DBLogin mDBLogin = null;
 
     private FirebaseAuth mAuth;
     public  FirebaseUser mUser = null;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private LoginCallback mLoginCallback;
+    boolean isCreateUser = false;
 
     private OnFailureListener mOnFailure = new OnFailureListener() {
         @Override
@@ -45,7 +44,12 @@ public class DB {
         }
     }
 
-    private DB()
+    public String getUserID()
+    {
+        return mUser.getUid();
+    }
+
+    private DBLogin()
     {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -55,7 +59,13 @@ public class DB {
                 mUser = firebaseAuth.getCurrentUser();
                 if (mUser != null) {
                     if (mLoginCallback != null) {
-                        mLoginCallback.userLoggedIn();
+                        if (isCreateUser) {
+                            mLoginCallback.userCreatedAccount();
+                            isCreateUser = false;
+                        } else {
+                            mLoginCallback.userLoggedIn();
+                        }
+                        mLoginCallback = null;
                     }
                 } else {
                     mUser = null;
@@ -66,12 +76,12 @@ public class DB {
         mAuth.addAuthStateListener(mAuthListener);
     }
 
-    public static DB shared()
+    public static DBLogin shared()
     {
-        if (mDB == null) {
-            mDB = new DB();
+        if (mDBLogin == null) {
+            mDBLogin = new DBLogin();
         }
-        return mDB;
+        return mDBLogin;
     }
 
     public void loginUser(String email, String password)
@@ -81,6 +91,7 @@ public class DB {
 
     public void createUser(String email, String password)
     {
+        isCreateUser = true;
         mAuth.createUserWithEmailAndPassword(email,password).addOnFailureListener(mOnFailure);
     }
 

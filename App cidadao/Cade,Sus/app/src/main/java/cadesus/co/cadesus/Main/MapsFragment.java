@@ -6,24 +6,19 @@ import android.content.pm.PackageManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
 
-import cadesus.co.cadesus.DB;
-import cadesus.co.cadesus.LoginActivity;
-import cadesus.co.cadesus.PostosComRemedio.PostosComRemedioActivity;
+import cadesus.co.cadesus.DB.DBLogin;
+import cadesus.co.cadesus.Login.LoginActivity;
 import cadesus.co.cadesus.R;
 
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
@@ -68,7 +63,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     public void setupLogin()
     {
         if (mLoginButton != null) {
-            if (DB.shared().isLoggedUser()) {
+            if (DBLogin.shared().isLoggedUser()) {
                 mLoginButton.setVisibility(View.GONE);
             } else {
                 mLoginButton.setVisibility(View.VISIBLE);

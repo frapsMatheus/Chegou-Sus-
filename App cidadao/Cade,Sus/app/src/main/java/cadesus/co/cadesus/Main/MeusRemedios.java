@@ -1,4 +1,4 @@
-package cadesus.co.cadesus;
+package cadesus.co.cadesus.Main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,10 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
+import cadesus.co.cadesus.AdicionarRemedios.AdicionarRemediosActivity;
+import cadesus.co.cadesus.Login.LoginActivity;
+import cadesus.co.cadesus.R;
+
 /**
  * Created by fraps on 7/11/16.
  */
@@ -30,14 +34,8 @@ public class MeusRemedios extends Fragment {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-                try {
-                    startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
-                } catch (GooglePlayServicesRepairableException e) {
-                    e.printStackTrace();
-                } catch (GooglePlayServicesNotAvailableException e) {
-                    e.printStackTrace();
-                }
+                Intent intent = new Intent(getActivity(), AdicionarRemediosActivity.class);
+                startActivity(intent);
             }
         });
 

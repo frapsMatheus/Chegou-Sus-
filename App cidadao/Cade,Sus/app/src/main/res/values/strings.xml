@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Chegou, Sus?</string>
+
+
+    <string name="categoria_localizacao">Localização.</string>
+    <string name="selecionar_minha_casa">Selecionar minha casa.</string>
+    <string name="selecionar_minha_casa_descricao">Esse endereço é utilizado para descobrir postos
+        de saudade perto de onde você mora.</string>
+
+    <string name="postos_preferidos">Selecionar postos preferidos.</string>
+    <string name="postos_preferidos_descricao">Os postos preferidos são utilizados para saber quando
+    um dos locais escolhidos recebe um medicamento desejado.
+    </string>
+    <string name="logout">Sair</string>
+
 </resources>

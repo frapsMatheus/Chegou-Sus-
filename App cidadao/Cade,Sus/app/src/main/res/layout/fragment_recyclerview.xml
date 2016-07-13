@@ -10,10 +10,9 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/common_ic_googleplayservices"
-        fab:fab_colorNormal="#252525"
-        fab:fab_colorPressed="#A4B8A1"
-        fab:fab_colorRipple="#A3B860"
+        android:src="@drawable/fab_add"
+        fab:fab_colorNormal="@color/colorPrimary"
+        fab:fab_colorPressed="@color/colorPrimaryDark"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp" />

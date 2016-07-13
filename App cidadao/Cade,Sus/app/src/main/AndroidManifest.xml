@@ -48,8 +48,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".Login.LoginActivity"></activity>
         <activity android:name=".PostosComRemedio.PostosComRemedioActivity"></activity>
+        <activity android:name=".AdicionarRemedios.AdicionarRemediosActivity"></activity>
 
         <activity
             android:name=".Main.MainActivity">
@@ -59,6 +60,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".Settings.SettingsActivity"></activity>
 
 
 

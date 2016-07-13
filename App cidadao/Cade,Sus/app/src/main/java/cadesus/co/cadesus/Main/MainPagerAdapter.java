@@ -7,8 +7,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 
-import cadesus.co.cadesus.MeusRemedios;
-
 /**
  * Created by fraps on 7/11/16.
  */
@@ -42,7 +40,7 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 1:
-                return "Meus remeédios";
+                return "Meus remédios";
             default:
                 return "Mapa";
         }
