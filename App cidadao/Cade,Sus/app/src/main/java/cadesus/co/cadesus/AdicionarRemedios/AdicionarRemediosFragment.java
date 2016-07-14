@@ -22,6 +22,7 @@ import java.util.LinkedHashMap;
 
 import cadesus.co.cadesus.BuildConfig;
 import cadesus.co.cadesus.DB.DBMain;
+import cadesus.co.cadesus.DB.DBObserver;
 import cadesus.co.cadesus.DB.DBUser;
 import cadesus.co.cadesus.DB.Entidades.Remedio;
 import cadesus.co.cadesus.DB.Entidades.User;
@@ -30,7 +31,8 @@ import cadesus.co.cadesus.R;
 /**
  * Created by fraps on 7/13/16.
  */
-public class AdicionarRemediosFragment extends Fragment implements AdicionarRemedioCallback {
+public class AdicionarRemediosFragment extends Fragment implements AdicionarRemedioCallback,
+        DBObserver {
 
     public static final String FRAGMENT_TAG =
             BuildConfig.APPLICATION_ID + ".FragmentTag";
@@ -53,6 +55,7 @@ public class AdicionarRemediosFragment extends Fragment implements AdicionarReme
         mRecyclerLayout = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mRecyclerLayout);
         searchList("");
+        DBMain.shared().subscribeToObserver(this);
         return v;
     }
 
@@ -99,6 +102,12 @@ public class AdicionarRemediosFragment extends Fragment implements AdicionarReme
         ((AdicionarRemediosActivity)getActivity()).getSupportActionBar().show();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        DBMain.shared().removeObserver(this);
+    }
+
     private void searchList(String text)
     {
 //        TODO: Add section
@@ -139,5 +148,10 @@ public class AdicionarRemediosFragment extends Fragment implements AdicionarReme
         User.shared().adicionarRemedio(remedio.uid,Long.valueOf(quantidade));
         DBUser.shared().saveUser();
         getActivity().finish();
+    }
+
+    @Override
+    public void dataUpdated() {
+        searchList("");
     }
 }

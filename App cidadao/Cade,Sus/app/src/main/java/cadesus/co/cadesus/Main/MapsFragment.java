@@ -18,10 +18,11 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
 import cadesus.co.cadesus.DB.DBLogin;
+import cadesus.co.cadesus.DB.DBObserver;
 import cadesus.co.cadesus.Login.LoginActivity;
 import cadesus.co.cadesus.R;
 
-public class MapsFragment extends Fragment implements OnMapReadyCallback {
+public class MapsFragment extends Fragment implements OnMapReadyCallback, DBObserver {
 
     private GoogleMap gMap;
     private MapView mapView;
@@ -127,5 +128,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             return;
         }
         gMap.setMyLocationEnabled(true);
+    }
+
+    @Override
+    public void dataUpdated() {
+
     }
 }

@@ -39,7 +39,8 @@
         android:layout_height="36dp"
         android:id="@+id/cell_remedio_edit"
         android:layout_marginLeft="4dp"
-        android:src="@android:drawable/ic_menu_edit" />
+        android:src="@android:drawable/ic_menu_edit"
+        android:clickable="true" />
 
 </LinearLayout>
 

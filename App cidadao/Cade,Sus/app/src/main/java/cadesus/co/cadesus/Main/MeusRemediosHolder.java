@@ -1,5 +1,6 @@
 package cadesus.co.cadesus.Main;
 
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -33,5 +34,10 @@ public class MeusRemediosHolder extends RecyclerView.ViewHolder {
     {
         mNome.setText(remedio.principio_ativo);
         mQuantidade.setText(String.valueOf(quantidade));
+    }
+
+    public void setEdit(View.OnClickListener click)
+    {
+        mEdit.setOnClickListener(click);
     }
 }

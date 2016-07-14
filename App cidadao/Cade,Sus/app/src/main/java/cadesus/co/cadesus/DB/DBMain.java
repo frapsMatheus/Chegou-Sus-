@@ -9,13 +9,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.Observer;
 
 import cadesus.co.cadesus.DB.Entidades.PostoDeSaude;
 import cadesus.co.cadesus.DB.Entidades.Remedio;
 import cadesus.co.cadesus.DB.Entidades.User;
 
-import android.support.v4.util.Pair;
 import android.util.Log;
 /**
  * Created by fraps on 7/13/16.
@@ -27,6 +26,8 @@ public class DBMain {
 
     public LinkedHashMap<String,Remedio> mRemedios = new LinkedHashMap();
     public ArrayList<PostoDeSaude> mPostosDeSaude = new ArrayList<>();
+
+    public ArrayList<DBObserver> observers = new ArrayList<>();
 
     DBMain()
     {
@@ -57,7 +58,8 @@ public class DBMain {
                    Remedio remedio = childSnap.getValue(Remedio.class);
                    remedio.uid = childSnap.getKey();
                    mRemedios.put(remedio.uid,remedio);
-               }
+                }
+                notifyObservers();
             }
 
             @Override
@@ -66,6 +68,23 @@ public class DBMain {
             }
         });
     }
+
+    public void notifyObservers()
+    {
+        for (DBObserver observer : observers) {
+            observer.dataUpdated();
+        }
+    }
+
+    public void subscribeToObserver(DBObserver observer)
+    {
+        observers.add(observer);
+    }
+
+    public void removeObserver(DBObserver observer)
+    {
+        observers.remove(observer);
+    };
 
     public void getUser()
     {
@@ -81,6 +100,7 @@ public class DBMain {
                     User.shared().longitude = user.longitude;
                     User.shared().remedios = new LinkedHashMap<String, Long>(user.remedios);
                 }
+                notifyObservers();
             }
 
             @Override

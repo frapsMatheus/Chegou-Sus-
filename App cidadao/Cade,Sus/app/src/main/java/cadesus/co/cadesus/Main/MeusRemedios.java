@@ -17,13 +17,14 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 
 import cadesus.co.cadesus.AdicionarRemedios.AdicionarRemediosActivity;
 import cadesus.co.cadesus.DB.DBMain;
+import cadesus.co.cadesus.DB.DBObserver;
 import cadesus.co.cadesus.DB.Entidades.User;
 import cadesus.co.cadesus.R;
 
 /**
  * Created by fraps on 7/11/16.
  */
-public class MeusRemedios extends Fragment {
+public class MeusRemedios extends Fragment implements DBObserver {
 
     int PLACE_PICKER_REQUEST = 1;
 
@@ -44,6 +45,7 @@ public class MeusRemedios extends Fragment {
         });
 
         DBMain.shared().getRemedios();
+        DBMain.shared().subscribeToObserver(this);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.fragment_recycler);
         LinearLayoutManager layout = new LinearLayoutManager(getActivity());
@@ -52,11 +54,22 @@ public class MeusRemedios extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         mAdapter = new MeusRemediosAdapter(DBMain.shared().getRemediosForUser(),
-                User.shared().remedios);
+                User.shared().remedios,getActivity());
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        DBMain.shared().removeObserver(this);
     }
 
     @Override
@@ -69,5 +82,12 @@ public class MeusRemedios extends Fragment {
                 Toast.makeText(getActivity(), toastMsg, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public void dataUpdated() {
+        mAdapter = new MeusRemediosAdapter(DBMain.shared().getRemediosForUser(),
+                User.shared().remedios,getActivity());
+        mRecyclerView.setAdapter(mAdapter);
     }
 }
