@@ -57,7 +57,7 @@ public class User
 
     public void setLocation(double lat, double lon)
     {
-        latitutde = lat;
+        latitude = lat;
         longitude = lon;
     }
 

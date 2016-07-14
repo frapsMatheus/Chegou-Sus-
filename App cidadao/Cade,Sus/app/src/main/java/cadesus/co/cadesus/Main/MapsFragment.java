@@ -16,9 +16,18 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import cadesus.co.cadesus.DB.DBLogin;
+import cadesus.co.cadesus.DB.DBMain;
 import cadesus.co.cadesus.DB.DBObserver;
+import cadesus.co.cadesus.DB.Entidades.PostoDeSaude;
 import cadesus.co.cadesus.Login.LoginActivity;
 import cadesus.co.cadesus.R;
 
@@ -28,6 +37,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, DBObse
     private MapView mapView;
 
     private Button mLoginButton;
+    private Map<Marker, String> mMarkers = new HashMap<>();
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -37,6 +47,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, DBObse
             mapView.onCreate(savedInstanceState);
         }
         initializeMap();
+        DBMain.shared().subscribeToObserver(this);
+        DBMain.shared().getPostos();
     }
 
     private void initializeMap() {
@@ -44,6 +56,14 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, DBObse
             mapView = (MapView) getActivity().findViewById(R.id.map);
             mapView.getMapAsync(this);
         }
+    }
+
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        DBMain.shared().removeObserver(this);
     }
 
     @Nullable
@@ -91,6 +111,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, DBObse
         mapView.onResume();
         initializeMap();
         setupLogin();
+        addPins();
     }
 
     @Override
@@ -118,20 +139,34 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, DBObse
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         gMap.setMyLocationEnabled(true);
+        gMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                String postoId = mMarkers.get(marker);
+            }
+        });
     }
 
     @Override
     public void dataUpdated() {
+        addPins();
+    }
 
+    public void addPins()
+    {
+        if (gMap != null) {
+            gMap.clear();
+            mMarkers.clear();
+            for (PostoDeSaude posto : DBMain.shared().mPostosDeSaude.values()) {
+                Marker marker = gMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(posto.latitude, posto.longitude))
+                        .title(posto.nome).snippet(posto.endereco).icon(BitmapDescriptorFactory
+                                .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                mMarkers.put(marker,posto.uid);
+            }
+        }
     }
 }

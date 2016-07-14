@@ -42,11 +42,6 @@ public class DBMain {
         return mDBMain;
     }
 
-    public void setPostos_de_saude(ArrayList<PostoDeSaude> postos_de_saude)
-    {
-        mPostosDeSaude = postos_de_saude;
-    }
-
     public void getRemedios()
     {
         DatabaseReference dbRef = mDB.getReference("remedios");
@@ -96,7 +91,7 @@ public class DBMain {
                 if (dataSnapshot.getValue() != null) {
                     User user = dataSnapshot.getValue(User.class);
                     User.shared().postos_saude = new ArrayList<String>(user.postos_saude);
-                    User.shared().latitutde = user.latitutde;
+                    User.shared().latitude = user.latitude;
                     User.shared().longitude = user.longitude;
                     User.shared().remedios = new LinkedHashMap<String, Long>(user.remedios);
                 }
@@ -121,6 +116,7 @@ public class DBMain {
                         postoDeSaude.uid = childSnap.getKey();
                         mPostosDeSaude.put(postoDeSaude.uid, postoDeSaude);
                     }
+                    notifyObservers();
                 }
 
                 @Override
@@ -133,7 +129,6 @@ public class DBMain {
     public ArrayList<Remedio> getRemediosForUser()
     {
         ArrayList<Remedio> remedios = new ArrayList<>();
-        LinkedHashMap<String, Long> quantidades = new LinkedHashMap<>();
 
         for (String id : User.shared().remedios.keySet()) {
             remedios.add(mRemedios.get(id));
@@ -144,7 +139,7 @@ public class DBMain {
     public ArrayList<PostoDeSaude> getPostosForUser() {
         ArrayList<PostoDeSaude> postosDeSaude = new ArrayList<>();
 
-        for (String id : User.shared().postosDeSaude.keySet()) {
+        for (String id : User.shared().postos_saude) {
             postosDeSaude.add(mPostosDeSaude.get(id));
         }
         return postosDeSaude;
