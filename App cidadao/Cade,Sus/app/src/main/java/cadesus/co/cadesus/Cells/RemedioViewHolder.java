@@ -14,8 +14,7 @@ public class RemedioViewHolder extends RecyclerView.ViewHolder {
 
     private TextView    mName;
     private TextView    mQuantidade;
-    private TextView    mNotifications;
-    private ImageView   mFlag;
+    private ImageView   mEdit;
 
     public RemedioViewHolder(View itemView) {
         super(itemView);
@@ -26,7 +25,6 @@ public class RemedioViewHolder extends RecyclerView.ViewHolder {
     {
         mName = (TextView)v.findViewById(R.id.cell_remedio_nome);
         mQuantidade = (TextView)v.findViewById(R.id.cell_remedio_quantidade);
-        mNotifications = (TextView)v.findViewById(R.id.cell_remedio_notification_counter);
-        mFlag = (ImageView) v.findViewById(R.id.cell_remedio_notificacao);
+        mEdit = (ImageView) v.findViewById(R.id.cell_remedio_edit);
     }
 }

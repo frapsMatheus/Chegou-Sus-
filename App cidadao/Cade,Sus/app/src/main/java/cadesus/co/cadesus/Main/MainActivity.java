@@ -12,8 +12,11 @@ import android.widget.Button;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.FirebaseDatabase;
 
 import cadesus.co.cadesus.DB.DBLogin;
+import cadesus.co.cadesus.DB.DBMain;
 import cadesus.co.cadesus.R;
 import cadesus.co.cadesus.Settings.SettingsActivity;
 
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity
         if (DBLogin.shared().isLoggedUser()) {
             mTabLayout.setVisibility(View.VISIBLE);
             mLogOut.setVisibility(View.VISIBLE);
+            DBMain.shared().getUser();
         } else {
             mTabLayout.setVisibility(View.GONE);
             mLogOut.setVisibility(View.GONE);

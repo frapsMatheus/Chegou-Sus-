@@ -4,19 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import cadesus.co.cadesus.AdicionarRemedios.AdicionarRemediosActivity;
-import cadesus.co.cadesus.Login.LoginActivity;
+import cadesus.co.cadesus.DB.DBMain;
+import cadesus.co.cadesus.DB.Entidades.User;
 import cadesus.co.cadesus.R;
 
 /**
@@ -25,6 +26,9 @@ import cadesus.co.cadesus.R;
 public class MeusRemedios extends Fragment {
 
     int PLACE_PICKER_REQUEST = 1;
+
+    RecyclerView mRecyclerView;
+    MeusRemediosAdapter mAdapter;
 
     @Nullable
     @Override
@@ -39,7 +43,20 @@ public class MeusRemedios extends Fragment {
             }
         });
 
+        DBMain.shared().getRemedios();
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.fragment_recycler);
+        LinearLayoutManager layout = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(layout);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter = new MeusRemediosAdapter(DBMain.shared().getRemediosForUser(),
+                User.shared().remedios);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override

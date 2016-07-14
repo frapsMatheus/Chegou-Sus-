@@ -7,6 +7,6 @@ import cadesus.co.cadesus.DB.Entidades.Remedio;
  */
 public interface AdicionarRemedioCallback {
 
-    void remedioAdicionado(Remedio remedio);
+    void remedioAdicionado(Remedio remedio, int Quantidade);
 
 }

@@ -197,9 +197,9 @@ public class LoginActivity extends Activity implements LoginCallback {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
                 String toastMsg = String.format("Place: %s", place.getName());
-                User user = new User();
+                User user = User.shared();
                 user.setLocation(place.getLatLng().latitude, place.getLatLng().longitude);
-                DBUser.shared().saveUser(DBLogin.shared().getUserID(),user);
+                DBUser.shared().saveUser();
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
             }
         }

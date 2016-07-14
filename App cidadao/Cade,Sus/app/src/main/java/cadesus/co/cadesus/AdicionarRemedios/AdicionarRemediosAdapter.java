@@ -40,13 +40,13 @@ public class AdicionarRemediosAdapter extends RecyclerView.Adapter<AdicionarReme
         builder.setView(view);
         builder.setTitle("Adicionar remédio");
         builder.setMessage("Adicione a quantidade de caixas de "
-                + remedio.principioAtivo + " que você necessita.");
+                + remedio.principio_ativo + " que você necessita.");
         builder.setCancelable(true);
         builder.setPositiveButton("Adicionar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                remedio.quantidade = Integer.parseInt(quantidadeRemedio.getText().toString());
-                mCallback.remedioAdicionado(remedio);
+                int quantidade = Integer.parseInt(quantidadeRemedio.getText().toString());
+                mCallback.remedioAdicionado(remedio,quantidade);
             }
         });
         builder.show();

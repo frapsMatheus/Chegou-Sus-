@@ -28,7 +28,7 @@ public class AdicionarRemedioHolder extends RecyclerView.ViewHolder {
 
     public void setFields(Remedio remedio)
     {
-        mNome.setText(remedio.principioAtivo);
+        mNome.setText(remedio.principio_ativo);
         mPatologia.setText(remedio.patologia);
     }
 

@@ -18,12 +18,12 @@ public class DBUser
     DBUser()
     {
         mDB = FirebaseDatabase.getInstance();
-        mRef = mDB.getReference("users");
+        mRef = mDB.getReference("usuarios");
     }
 
-    public void saveUser(String userID, User user)
+    public void saveUser()
     {
-        mRef.child(userID).setValue(user);
+        mRef.child(DBLogin.shared().getUserID()).setValue(User.shared());
     }
 
     public static DBUser shared()
