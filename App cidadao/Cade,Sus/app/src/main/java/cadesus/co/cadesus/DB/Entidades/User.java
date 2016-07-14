@@ -15,7 +15,7 @@ import java.util.Map;
 public class User
 {
 
-    public double latitutde;
+    public double latitude;
     public double longitude;
 
     public Map<String,Long> remedios = new HashMap<>();
@@ -59,5 +59,13 @@ public class User
     {
         latitutde = lat;
         longitude = lon;
+    }
+
+    public void clearUser()
+    {
+        latitude = 0;
+        longitude = 0;
+        remedios.clear();
+        postos_saude.clear();
     }
 }

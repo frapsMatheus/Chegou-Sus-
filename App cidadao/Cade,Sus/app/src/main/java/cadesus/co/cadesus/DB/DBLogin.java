@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import cadesus.co.cadesus.DB.Entidades.User;
 import cadesus.co.cadesus.Login.LoginCallback;
 
 /**
@@ -104,6 +105,7 @@ public class DBLogin {
     {
         mAuth.signOut();
         mUser = null;
+        User.shared().clearUser();
     }
 
 }
