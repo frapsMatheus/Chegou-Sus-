@@ -24,8 +24,8 @@ public class DBMain {
     private static DBMain mDBMain;
     private final FirebaseDatabase mDB;
 
-    public LinkedHashMap<String,Remedio> mRemedios = new LinkedHashMap();
-    public ArrayList<PostoDeSaude> mPostosDeSaude = new ArrayList<>();
+    public LinkedHashMap<String, Remedio>      mRemedios = new LinkedHashMap();
+    public LinkedHashMap<String, PostoDeSaude> mPostosDeSaude = new LinkedHashMap();
 
     public ArrayList<DBObserver> observers = new ArrayList<>();
 
@@ -110,14 +110,43 @@ public class DBMain {
         });
     }
 
+    public void getPostos() {
+        DatabaseReference dbRef = mDB.getReference("postos_saude");
+        Query queryPostos = dbRef.orderByKey();
+        queryPostos.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot childSnap : dataSnapshot.getChildren()) {
+                        PostoDeSaude postoDeSaude = childSnap.getValue(PostoDeSaude.class);
+                        postoDeSaude.uid = childSnap.getKey();
+                        mPostosDeSaude.put(postoDeSaude.uid, postoDeSaude);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d("","");
+                }
+            });
+    }
+
     public ArrayList<Remedio> getRemediosForUser()
     {
         ArrayList<Remedio> remedios = new ArrayList<>();
-        LinkedHashMap<String,Long> quantidades = new LinkedHashMap<>();
+        LinkedHashMap<String, Long> quantidades = new LinkedHashMap<>();
+
         for (String id : User.shared().remedios.keySet()) {
             remedios.add(mRemedios.get(id));
         }
         return remedios;
     }
 
+    public ArrayList<PostoDeSaude> getPostosForUser() {
+        ArrayList<PostoDeSaude> postosDeSaude = new ArrayList<>();
+
+        for (String id : User.shared().postosDeSaude.keySet()) {
+            postosDeSaude.add(mPostosDeSaude.get(id));
+        }
+        return postosDeSaude;
+    }
 }

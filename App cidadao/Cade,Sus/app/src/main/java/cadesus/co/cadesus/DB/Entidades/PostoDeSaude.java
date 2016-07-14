@@ -17,7 +17,8 @@ public class PostoDeSaude {
     public String nome;
     public String endereco;
     public String cep;
-    public Map<String,Long> remedios = new HashMap<>();
+    public String telefone;
+    public Map<String, Long> remedios = new HashMap<>();
 
     public void adicionarRemedio(String id, Long caixas)
     {
