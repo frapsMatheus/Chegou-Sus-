@@ -8,7 +8,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <Button
         android:layout_width="wrap_content"
-        android:text="Configuracões"
+        android:text="Configurações"
         android:layout_margin="10dp"
         android:layout_gravity="end"
         android:layout_height="36dp"

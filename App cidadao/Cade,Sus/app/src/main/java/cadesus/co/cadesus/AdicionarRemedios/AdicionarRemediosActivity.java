@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -32,6 +33,8 @@ public class AdicionarRemediosActivity extends AppCompatActivity
         mToolbar = (Toolbar)findViewById(R.id.tool_bar);
         mToolbar.setTitle("Adicionar remédio");
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     protected void addFragment(@IdRes int containerViewId,
@@ -42,5 +45,15 @@ public class AdicionarRemediosActivity extends AppCompatActivity
                 .add(containerViewId, fragment, fragmentTag)
                 .disallowAddToBackStack()
                 .commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
