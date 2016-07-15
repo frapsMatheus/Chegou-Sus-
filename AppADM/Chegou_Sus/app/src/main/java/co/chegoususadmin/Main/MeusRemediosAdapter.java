@@ -16,6 +16,7 @@ import java.util.Map;
 import co.chegoususadmin.DB.DBPostosDeSaude;
 import co.chegoususadmin.DB.Entidades.PostoDeSaude;
 import co.chegoususadmin.DB.Entidades.Remedio;
+import co.chegoususadmin.EmptyView;
 import co.chegoususadmin.R;
 
 /**
@@ -25,6 +26,7 @@ public class MeusRemediosAdapter extends RecyclerView.Adapter {
 
     static int POSTO_VIEW = 1;
     static int REMEDIO_VIEW = 2;
+    static int EMPTY_VIEW = 3;
 
     private final Activity mActivity;
     private Map<String,Long> mQuantidades;
@@ -44,35 +46,41 @@ public class MeusRemediosAdapter extends RecyclerView.Adapter {
                     .inflate(R.layout.cell_posto_main, parent, false);
             PostoInfoHolder holder = new PostoInfoHolder(view);
             return holder;
-        } else {
+        } else if (viewType == REMEDIO_VIEW){
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.cell_remedio, parent, false);
             RemediosHolder holder = new RemediosHolder(view);
             return holder;
+        } else {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.cell_empty, parent, false);
+            EmptyView holder = new EmptyView(view);
+            return holder;
         }
-
     }
 
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
             return POSTO_VIEW;
-        } else {
+        } else if (position< mRemedios.size() + 1){
             return REMEDIO_VIEW;
+        } else {
+            return EMPTY_VIEW;
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (position == 0) {
-            ((PostoInfoHolder)holder).setView(mActivity.getBaseContext(),PostoDeSaude.shared());
-        } else {
+            ((PostoInfoHolder)holder).setView(mActivity,PostoDeSaude.shared());
+        } else if (position< mRemedios.size() + 1) {
             final Remedio remedio = mRemedios.get(position-1);
             ((RemediosHolder)holder).setRemedio(remedio,mQuantidades.get(remedio.uid));
             View.OnClickListener onEditClick = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    criarDialog(remedio,position);
+                    criarDialog(remedio,position-1);
                 }
             };
             ((RemediosHolder)holder).setEdit(onEditClick);
@@ -113,7 +121,7 @@ public class MeusRemediosAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         if (PostoDeSaude.shared().nome != null) {
-            return 1 + mRemedios.size();
+            return 1 + mRemedios.size() + 1;
         } else {
             return 0;
         }

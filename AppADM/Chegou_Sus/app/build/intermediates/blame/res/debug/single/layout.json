@@ -168,6 +168,10 @@
         "source": "/Users/fraps/cade_sus/AppADM/Chegou_Sus/app/build/intermediates/exploded-aar/com.android.support/design/24.0.0/res/layout/design_navigation_item_subheader.xml"
     },
     {
+        "merged": "/Users/fraps/cade_sus/AppADM/Chegou_Sus/app/build/intermediates/res/merged/debug/layout/cell_empty.xml",
+        "source": "/Users/fraps/cade_sus/AppADM/Chegou_Sus/app/src/main/res/layout/cell_empty.xml"
+    },
+    {
         "merged": "/Users/fraps/cade_sus/AppADM/Chegou_Sus/app/build/intermediates/res/merged/debug/layout/design_layout_tab_text.xml",
         "source": "/Users/fraps/cade_sus/AppADM/Chegou_Sus/app/build/intermediates/exploded-aar/com.android.support/design/24.0.0/res/layout/design_layout_tab_text.xml"
     },
