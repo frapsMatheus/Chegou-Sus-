@@ -209,6 +209,7 @@
     <orderEntry type="library" exported="" name="firebase-storage-common-9.2.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-appindexing-9.2.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-auth-common-9.2.0" level="project" />
+    <orderEntry type="library" exported="" name="glide-3.7.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-identity-9.2.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-games-9.2.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-core-9.2.0" level="project" />

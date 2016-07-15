@@ -276,6 +276,10 @@
         "source": "/Users/fraps/cade_sus/AppADM/Chegou_Sus/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/res/layout/mr_media_route_list_item.xml"
     },
     {
+        "merged": "/Users/fraps/cade_sus/AppADM/Chegou_Sus/app/build/intermediates/res/merged/debug/layout/cell_posto_main.xml",
+        "source": "/Users/fraps/cade_sus/AppADM/Chegou_Sus/app/src/main/res/layout/cell_posto_main.xml"
+    },
+    {
         "merged": "/Users/fraps/cade_sus/AppADM/Chegou_Sus/app/build/intermediates/res/merged/debug/layout/abc_popup_menu_header_item_layout.xml",
         "source": "/Users/fraps/cade_sus/AppADM/Chegou_Sus/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.0.0/res/layout/abc_popup_menu_header_item_layout.xml"
     },
