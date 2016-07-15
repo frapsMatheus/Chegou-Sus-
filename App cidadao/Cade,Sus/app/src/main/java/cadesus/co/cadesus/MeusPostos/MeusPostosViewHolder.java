@@ -38,8 +38,8 @@ public class MeusPostosViewHolder extends RecyclerView.ViewHolder {
         mCheckBox.setChecked(state);
     }
 
-    public void setOnClickCheckBox(CompoundButton.OnCheckedChangeListener onChecked )
+    public void setOnClickCheckBox(View.OnClickListener onChecked )
     {
-        mCheckBox.setOnCheckedChangeListener(onChecked);
+        mCheckBox.setOnClickListener(onChecked);
     }
 }

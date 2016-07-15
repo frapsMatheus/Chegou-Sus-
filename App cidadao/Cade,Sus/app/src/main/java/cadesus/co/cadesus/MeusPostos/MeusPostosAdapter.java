@@ -64,10 +64,10 @@ public class MeusPostosAdapter extends RecyclerView.Adapter {
             View itemView = holder.itemView;
             final PostoDeSaude posto = mPostosDeSaude.get(position);
             ((MeusPostosViewHolder)holder).setView(posto, mPostosSelected.get(posto.uid));
-            CompoundButton.OnCheckedChangeListener check = new CompoundButton.OnCheckedChangeListener() {
+            CompoundButton.OnClickListener check = new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    mPostosSelected.put(posto.uid, b);
+                public void onClick(View view) {
+                    mPostosSelected.put(posto.uid, !mPostosSelected.get(posto.uid));
                 }
             };
             ((MeusPostosViewHolder)holder).setOnClickCheckBox(check);

@@ -15,10 +15,13 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Observer;
 import java.util.TreeMap;
 
@@ -217,7 +220,8 @@ public class DBMain {
             }
         }
 //        TODO: ORDENAR ISSO AQUI
-        return postosNaLocalizacao;
+        return _orderPostosPorDistancia(postosNaLocalizacao);
+
     }
 
     public LinkedHashMap<PostoDeSaude,Double> getPostosPreferidosComDistancia(LatLng position , LinkedHashMap<String, PostoDeSaude> postos)
@@ -238,12 +242,50 @@ public class DBMain {
 
         }
 //        TODO: ORDENAR ISSO AQUI
-        return postosNaLocalizacao;
+        return _orderPostosPorDistancia(postosNaLocalizacao);
     }
 
     public LinkedHashMap<PostoDeSaude,Double> getPostosCloseToLocation(LatLng position)
     {
         return getPostosCloseToLocation(position,mPostosDeSaude);
     }
+    public LinkedHashMap<PostoDeSaude,Double> getAllPostosWithLocation(LatLng position)
+    {
+        final LinkedHashMap<PostoDeSaude,Double> postosWithLocation = new LinkedHashMap<>();
+        Location myLocation = new Location("");
+        myLocation.setLatitude(position.latitude);
+        myLocation.setLongitude(position.longitude);
+        for (PostoDeSaude posto : mPostosDeSaude.values()) {
+            Location currentLocation = new Location("");
+            currentLocation.setLatitude(posto.location.get(0));
+            currentLocation.setLongitude(posto.location.get(1));
+            double distance = myLocation.distanceTo(currentLocation);
+            postosWithLocation.put(posto, distance);
+        }
+//        TODO: ORDENAR ISSO AQUI
+        return _orderPostosPorDistancia(postosWithLocation);
+    }
+
+    private LinkedHashMap<PostoDeSaude, Double> _orderPostosPorDistancia(LinkedHashMap<PostoDeSaude, Double> postos)
+    {
+        LinkedHashMap<PostoDeSaude, Double> postosOrdenados = new LinkedHashMap<>();
+
+        List<Map.Entry<PostoDeSaude, Double>> list =
+                new LinkedList<Map.Entry<PostoDeSaude, Double>>( postos.entrySet() );
+        Collections.sort( list, new Comparator<Map.Entry<PostoDeSaude, Double>>()
+        {
+            @Override
+            public int compare(Map.Entry<PostoDeSaude, Double> o1, Map.Entry<PostoDeSaude, Double> o2) {
+                return (o1.getValue()).compareTo( o2.getValue() );
+            }
+        } );
+
+        for (Map.Entry<PostoDeSaude, Double> entry : list)
+        {
+            postosOrdenados.put( entry.getKey(), entry.getValue() );
+        }
+        return postosOrdenados;
+    }
+
 
 }

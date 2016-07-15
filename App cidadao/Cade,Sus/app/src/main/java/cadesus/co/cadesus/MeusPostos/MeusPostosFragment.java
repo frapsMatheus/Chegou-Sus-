@@ -44,6 +44,7 @@ public class MeusPostosFragment extends Fragment implements DBObserver {
 
     private RecyclerView.LayoutManager mRecyclerLayout;
     private ArrayList<PostoDeSaude> mPostoSearch;
+
     private MeusPostosAdapter mAdapter;
     private FloatingActionButton mDone;
     boolean mFirstTime = true;
@@ -127,7 +128,9 @@ public class MeusPostosFragment extends Fragment implements DBObserver {
     private void searchList(String text)
     {
 //        TODO: Add section
-        ArrayList<PostoDeSaude> postosAtuais = new ArrayList<PostoDeSaude>(mPostosInitialList.values());
+        ArrayList<PostoDeSaude> postosAtuais =
+                new ArrayList<>(DBMain.shared().getAllPostosWithLocation(
+                        DBUser.shared().lastKnowLocation).keySet());
         mPostoSearch = new ArrayList<PostoDeSaude>();
         for (PostoDeSaude posto : postosAtuais) {
             if (posto.nome.toLowerCase().contains(text.toLowerCase()) ||
