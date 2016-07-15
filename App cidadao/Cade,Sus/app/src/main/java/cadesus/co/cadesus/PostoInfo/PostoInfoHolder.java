@@ -61,7 +61,8 @@ public class PostoInfoHolder extends RecyclerView.ViewHolder {
         String heigth = String.valueOf(height);
         String width = String.valueOf(16*height);
         String mapa = "https://maps.googleapis.com/maps/api/staticmap?center="+ latitude +
-                "," + longitude + "&zoom=15&size="+ width +"x"+heigth+"&sensor=false";
+                "," + longitude + "&zoom=15&size="+ width +"x"+heigth+"&sensor=false&markers=color:blue%7Clabel:S%7C"+
+                latitude +","+longitude;
         Glide.with(context).load(mapa).into(mMapa);
     }
 

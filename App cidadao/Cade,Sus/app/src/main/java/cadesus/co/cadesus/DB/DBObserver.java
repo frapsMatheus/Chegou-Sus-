@@ -5,6 +5,12 @@ package cadesus.co.cadesus.DB;
  */
 public interface DBObserver {
 
-    void dataUpdated();
+    void dataRemedioUpdated();
+
+    void userUpdated();
+
+    void postosUpdated();
+
 
 }
+

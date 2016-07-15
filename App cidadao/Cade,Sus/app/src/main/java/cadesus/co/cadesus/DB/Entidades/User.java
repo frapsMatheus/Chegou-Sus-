@@ -21,6 +21,7 @@ public class User
 
     public Map<String,Long> remedios = new HashMap<>();
     public List<String> postos_saude = new ArrayList<>();
+    public Map<String,Boolean> notificacoes = new HashMap<>();
 
     private static User mUser = null;
 

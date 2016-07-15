@@ -42,7 +42,7 @@ public class DBMain {
 
     public ArrayList<DBObserver> observers = new ArrayList<>();
 
-    private double mLocationRadius = 100000;
+    private double mLocationRadius = 20000;
 
     DBMain()
     {
@@ -69,7 +69,7 @@ public class DBMain {
                    remedio.uid = childSnap.getKey();
                    mRemedios.put(remedio.uid,remedio);
                 }
-                notifyObservers();
+                notifyObserversRemedios();
             }
 
             @Override
@@ -79,12 +79,27 @@ public class DBMain {
         });
     }
 
-    public void notifyObservers()
+    public void notifyObserversUser()
     {
         for (DBObserver observer : observers) {
-            observer.dataUpdated();
+            observer.userUpdated();
         }
     }
+
+    public void notifyObserversRemedios()
+    {
+        for (DBObserver observer : observers) {
+            observer.dataRemedioUpdated();
+        }
+    }
+
+    public void notifyObserversPostos()
+    {
+        for (DBObserver observer : observers) {
+            observer.postosUpdated();
+        }
+    }
+
 
     public void subscribeToObserver(DBObserver observer)
     {
@@ -110,9 +125,10 @@ public class DBMain {
                     User.shared().longitude = user.longitude;
                     User.shared().remedios = new LinkedHashMap<String, Long>(user.remedios);
                     User.shared().push_token = FirebaseInstanceId.getInstance().getToken();
+                    User.shared().notificacoes = new LinkedHashMap<String,Boolean>(user.notificacoes);
                     DBUser.shared().saveUser();
                 }
-                notifyObservers();
+                notifyObserversUser();
             }
 
             @Override
@@ -133,7 +149,7 @@ public class DBMain {
                         postoDeSaude.uid = childSnap.getKey();
                         mPostosDeSaude.put(postoDeSaude.uid, postoDeSaude);
                     }
-                    notifyObservers();
+                    notifyObserversPostos();
                 }
 
                 @Override

@@ -18,6 +18,7 @@ public class RemediosHolder extends RecyclerView.ViewHolder {
     TextView mNome;
     TextView mQuantidade;
     TextView mPatologia;
+    TextView mNotificacoes;
     public ImageView mEdit;
 
     public RemediosHolder(View itemView) {
@@ -31,13 +32,19 @@ public class RemediosHolder extends RecyclerView.ViewHolder {
         mQuantidade = (TextView) v.findViewById(R.id.cell_remedio_quantidade);
         mEdit = (ImageView) v.findViewById(R.id.cell_remedio_edit);
         mPatologia = (TextView) v.findViewById(R.id.cell_remedio_patologia);
+        mNotificacoes = (TextView) v.findViewById(R.id.cell_remedio_notificacao);
     }
 
-    public void setRemedio(Remedio remedio, Long quantidade)
+    public void setRemedio(Remedio remedio, Long quantidade, boolean hasNotification)
     {
         mNome.setText(remedio.principio_ativo);
         mPatologia.setText(remedio.patologia);
         mQuantidade.setText(String.valueOf(quantidade));
+        if (hasNotification) {
+            mNotificacoes.setVisibility(View.VISIBLE);
+        } else {
+            mNotificacoes.setVisibility(View.GONE);
+        }
     }
 
     public void setEdit(View.OnClickListener click)

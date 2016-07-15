@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:background="@color/colorPrimary"
+    android:elevation="2dp"
+    android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button
+        android:layout_width="wrap_content"
+        android:text="Configurações"
+        android:layout_margin="10dp"
+        android:layout_gravity="end"
+        android:layout_height="36dp"
+        android:enabled="true"
+        android:id="@+id/toolbar_logout"
+        style="@style/MyButton"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp" />
+
+    </android.support.v7.widget.Toolbar>

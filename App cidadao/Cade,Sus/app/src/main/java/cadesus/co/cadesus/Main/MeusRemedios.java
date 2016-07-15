@@ -62,7 +62,7 @@ public class MeusRemedios extends Fragment implements DBObserver {
     public void onResume() {
         super.onResume();
         mAdapter = new MeusRemediosAdapter(DBMain.shared().getRemediosForUser(),
-                User.shared().remedios,getActivity());
+                User.shared().remedios,getActivity(),User.shared().notificacoes);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -87,7 +87,7 @@ public class MeusRemedios extends Fragment implements DBObserver {
     @Override
     public void dataUpdated() {
         mAdapter = new MeusRemediosAdapter(DBMain.shared().getRemediosForUser(),
-                User.shared().remedios,getActivity());
+                User.shared().remedios,getActivity(),User.shared().notificacoes);
         mRecyclerView.setAdapter(mAdapter);
     }
 }

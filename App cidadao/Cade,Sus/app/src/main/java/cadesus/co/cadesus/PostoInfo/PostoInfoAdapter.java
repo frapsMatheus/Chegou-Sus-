@@ -68,7 +68,7 @@ public class PostoInfoAdapter extends RecyclerView.Adapter {
         } else {
             int currentPosition = position-1;
             Remedio remedio = mRemedios.get(currentPosition);
-            ((RemediosHolder)holder).setRemedio(remedio,mQuantidades.get(remedio.uid));
+            ((RemediosHolder)holder).setRemedio(remedio,mQuantidades.get(remedio.uid),false);
             ((RemediosHolder)holder).hideEdit();
         }
     }

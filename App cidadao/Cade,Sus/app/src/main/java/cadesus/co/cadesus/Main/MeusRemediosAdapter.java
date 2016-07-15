@@ -25,14 +25,17 @@ import cadesus.co.cadesus.R;
 public class MeusRemediosAdapter extends RecyclerView.Adapter<RemediosHolder> {
 
     private final Activity mActivity;
+    private final Map<String,Boolean> mNotifications;
     private Map<String,Long> mQuantidades;
     private ArrayList<Remedio> mRemedios = new ArrayList<>();
 
-    MeusRemediosAdapter(ArrayList<Remedio> remedios, Map<String,Long> quantidades, Activity activity)
+    MeusRemediosAdapter(ArrayList<Remedio> remedios, Map<String,Long> quantidades, Activity activity,
+                        Map<String,Boolean> notifications)
     {
         mRemedios = remedios;
         mQuantidades = quantidades;
         mActivity = activity;
+        mNotifications = notifications;
     }
 
 
@@ -47,7 +50,12 @@ public class MeusRemediosAdapter extends RecyclerView.Adapter<RemediosHolder> {
     @Override
     public void onBindViewHolder(RemediosHolder holder, final int position) {
         View view = holder.itemView;
-        holder.setRemedio(mRemedios.get(position),mQuantidades.get(mRemedios.get(position).uid));
+        Remedio remedio = mRemedios.get(position);
+        if (mNotifications.get(remedio.uid) != null) {
+            holder.setRemedio(remedio,mQuantidades.get(remedio.uid),mNotifications.get(remedio.uid));
+        } else {
+            holder.setRemedio(remedio,mQuantidades.get(remedio.uid),false);
+        }
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

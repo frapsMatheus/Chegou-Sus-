@@ -6,56 +6,77 @@
     android:clickable="true">
 
 <LinearLayout
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:layout_margin="8dp">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Nome do remédio"
-            android:id="@+id/cell_remedio_nome"
-            android:layout_weight="1" />
-
-        <TextView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/cell_remedio_patologia"
-            android:layout_marginTop="4dp"
-            android:text="Patologia" />
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Nome do remédio"
+                android:id="@+id/cell_remedio_nome"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/cell_remedio_patologia"
+                android:layout_marginTop="4dp"
+                android:text="Patologia" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:background="@color/colorPrimary"
+            android:layout_margin="4dp"></FrameLayout>
+
+        <TextView
+            android:layout_width="44dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="999"
+            android:id="@+id/cell_remedio_quantidade"
+            android:gravity="center"
+            android:layout_gravity="center_vertical" />
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:id="@+id/cell_remedio_edit"
+            android:layout_marginLeft="4dp"
+            android:src="@android:drawable/ic_menu_edit"
+            android:clickable="true" />
+
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0"
-        android:background="@color/colorPrimary"
-        android:layout_margin="4dp"></FrameLayout>
-
     <TextView
-        android:layout_width="44dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="999"
-        android:id="@+id/cell_remedio_quantidade"
-        android:gravity="center" />
-
-    <ImageView
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:id="@+id/cell_remedio_edit"
-        android:layout_marginLeft="4dp"
-        android:src="@android:drawable/ic_menu_edit"
-        android:clickable="true" />
+        android:text="Caixas chegaram em um posto preferido"
+        android:id="@+id/cell_remedio_notificacao"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/white"
+        android:background="@color/colorAccent"
+        android:padding="4dp"
+        android:textSize="14dp" />
 
 </LinearLayout>
 
