@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import cadesus.co.cadesus.DB.Entidades.PostoDeSaude;
+import cadesus.co.cadesus.DB.Entidades.Remedio;
 import cadesus.co.cadesus.PostoInfo.PostoInfoActivity;
 import cadesus.co.cadesus.R;
 
@@ -22,14 +23,17 @@ public class PostosComRemedioRecyclerAdapter extends RecyclerView.Adapter<Postos
 
     ArrayList<PostoDeSaude> mPostos;
     LinkedHashMap<String,Double> mDistancias;
+    Remedio mRemedio;
     Activity mActivity;
 
     PostosComRemedioRecyclerAdapter(ArrayList<PostoDeSaude> postos,
-                                    LinkedHashMap<String,Double> distancias, Activity context)
+                                    LinkedHashMap<String,Double> distancias, Remedio remedio,
+                                    Activity context)
     {
         mPostos = postos;
         mDistancias = distancias;
         mActivity = context;
+        mRemedio = remedio;
     }
 
     @Override
@@ -43,7 +47,7 @@ public class PostosComRemedioRecyclerAdapter extends RecyclerView.Adapter<Postos
     @Override
     public void onBindViewHolder(PostosComRemedioHolder holder, int position) {
         final PostoDeSaude posto = mPostos.get(position);
-        holder.setView(posto,mDistancias.get(posto.uid));
+        holder.setView(posto,mDistancias.get(posto.uid),posto.remedios.get(mRemedio.uid));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

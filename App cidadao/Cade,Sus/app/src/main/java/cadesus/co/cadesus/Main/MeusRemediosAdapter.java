@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.Map;
 
+import cadesus.co.cadesus.Cells.EmptyView;
 import cadesus.co.cadesus.DB.DBUser;
 import cadesus.co.cadesus.DB.Entidades.Remedio;
 import cadesus.co.cadesus.DB.Entidades.User;
@@ -22,7 +24,10 @@ import cadesus.co.cadesus.R;
 /**
  * Created by fraps on 7/14/16.
  */
-public class MeusRemediosAdapter extends RecyclerView.Adapter<RemediosHolder> {
+public class MeusRemediosAdapter extends RecyclerView.Adapter {
+
+    final static int REMEDIO_VIEW = 1;
+    final static int EMPTY_VIEW = 2;
 
     private final Activity mActivity;
     private final Map<String,Boolean> mNotifications;
@@ -40,42 +45,60 @@ public class MeusRemediosAdapter extends RecyclerView.Adapter<RemediosHolder> {
 
 
     @Override
-    public RemediosHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cell_remedio, parent, false);
-        RemediosHolder holder = new RemediosHolder(view);
-        return holder;
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == REMEDIO_VIEW) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.cell_remedio, parent, false);
+            RemediosHolder holder = new RemediosHolder(view);
+            return holder;
+        } else {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.cell_empty, parent, false);
+            EmptyView holder = new EmptyView(view);
+            return holder;
+        }
     }
 
     @Override
-    public void onBindViewHolder(final RemediosHolder holder, final int position) {
-        View view = holder.itemView;
-        final Remedio remedio = mRemedios.get(position);
-        if (mNotifications.get(remedio.uid) != null) {
-            holder.setRemedio(remedio,mQuantidades.get(remedio.uid),mNotifications.get(remedio.uid));
+    public int getItemViewType(int position) {
+        if (position<mRemedios.size()) {
+            return REMEDIO_VIEW;
         } else {
-            holder.setRemedio(remedio,mQuantidades.get(remedio.uid),false);
+            return EMPTY_VIEW;
         }
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mNotifications.get(remedio.uid) != null) {
-                    User.shared().notificacoes.remove(remedio.uid);
-                    DBUser.shared().saveUser();
+    }
+
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        if (position<mRemedios.size()) {
+            View view = holder.itemView;
+            final Remedio remedio = mRemedios.get(position);
+            if (mNotifications.get(remedio.uid) != null) {
+                ((RemediosHolder) holder).setRemedio(remedio, mQuantidades.get(remedio.uid), mNotifications.get(remedio.uid));
+            } else {
+                ((RemediosHolder) holder).setRemedio(remedio, mQuantidades.get(remedio.uid), false);
+            }
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mNotifications.get(remedio.uid) != null) {
+                        User.shared().notificacoes.remove(remedio.uid);
+                        DBUser.shared().saveUser();
+                    }
+                    Intent intent = new Intent(mActivity, PostosComRemedioActivity.class);
+                    intent.putExtra("remedioID", mRemedios.get(position).uid);
+                    mActivity.startActivity(intent);
                 }
-                Intent intent = new Intent(mActivity, PostosComRemedioActivity.class);
-                intent.putExtra("remedioID",mRemedios.get(position).uid);
-                mActivity.startActivity(intent);
-            }
-        });
-        View.OnClickListener onEditClick = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Remedio remedio = mRemedios.get(position);
-                criarDialog(remedio,position);
-            }
-        };
-        holder.setEdit(onEditClick);
+            });
+            View.OnClickListener onEditClick = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final Remedio remedio = mRemedios.get(position);
+                    criarDialog(remedio, position);
+                }
+            };
+            ((RemediosHolder) holder).setEdit(onEditClick);
+        }
     }
 
     private void criarDialog(final Remedio remedio, int position)
@@ -111,6 +134,6 @@ public class MeusRemediosAdapter extends RecyclerView.Adapter<RemediosHolder> {
 
     @Override
     public int getItemCount() {
-        return mRemedios.size();
+        return mRemedios.size() + 1;
     }
 }

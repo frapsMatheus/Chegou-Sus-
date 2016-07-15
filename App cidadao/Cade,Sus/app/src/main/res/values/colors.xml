@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#3399cc</color>
     <color name="colorPrimaryDark">#2e8ab8</color>
+    <color name="loginBackground">#4490ac</color>
     <color name="colorAccent">#71b8db</color>
     <color name="colorAccentDark">#5cadd6</color>
     <color name="colorText">#08181f</color>

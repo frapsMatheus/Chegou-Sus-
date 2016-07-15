@@ -26,7 +26,9 @@ public class DBUser
 
     public void saveUser()
     {
-        mRef.child(DBLogin.shared().getUserID()).setValue(User.shared());
+        if (!DBLogin.shared().getUserID().equals("")) {
+            mRef.child(DBLogin.shared().getUserID()).setValue(User.shared());
+        }
     }
 
     public static DBUser shared()

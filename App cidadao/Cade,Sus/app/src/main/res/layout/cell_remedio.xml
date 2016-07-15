@@ -2,7 +2,9 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
     android:clickable="true">
 
 <LinearLayout
@@ -60,9 +62,10 @@
             android:layout_height="36dp"
             android:id="@+id/cell_remedio_edit"
             android:layout_marginLeft="4dp"
-            android:src="@android:drawable/ic_menu_edit"
+            android:src="@drawable/edit"
             android:clickable="true"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:padding="4dp" />
 
     </LinearLayout>
 
@@ -70,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Caixas chegaram em um posto preferido"
+        android:text="Chegou!"
         android:id="@+id/cell_remedio_notificacao"
         android:gravity="center_horizontal"
         android:layout_marginTop="8dp"

@@ -59,7 +59,7 @@ public class PertoDeCasaFragment extends Fragment implements DBObserver
             distancias.put(pair.getKey().uid,pair.getValue());
         }
         mAdapter = new PostosComRemedioRecyclerAdapter(new ArrayList<>(postosComDistancia.keySet()),
-                distancias,getActivity());
+                distancias,mRemedio,getActivity());
         mRecyclerView.setAdapter(mAdapter);
     }
 

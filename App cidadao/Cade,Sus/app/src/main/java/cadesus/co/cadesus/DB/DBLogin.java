@@ -47,7 +47,12 @@ public class DBLogin {
 
     public String getUserID()
     {
-        return mUser.getUid();
+        if (mUser != null) {
+            return mUser.getUid();
+        } else {
+            return "";
+        }
+
     }
 
     private DBLogin()
@@ -103,6 +108,8 @@ public class DBLogin {
 
     public void logOutUser()
     {
+        User.shared().push_token = null;
+        DBUser.shared().saveUser();
         mAuth.signOut();
         mUser = null;
         User.shared().clearUser();

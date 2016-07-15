@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -137,6 +139,14 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, DBObse
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
         gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        CameraUpdate center=
+                CameraUpdateFactory.newLatLng(new LatLng(-15.7941,
+                        -47.8825));
+        CameraUpdate zoom=CameraUpdateFactory.zoomTo(9);
+
+        gMap.moveCamera(center);
+        gMap.animateCamera(zoom);
+
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
