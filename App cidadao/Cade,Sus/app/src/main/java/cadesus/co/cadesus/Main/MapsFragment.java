@@ -154,11 +154,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, DBObse
         });
     }
 
-    @Override
-    public void dataUpdated() {
-        addPins();
-    }
-
     public void addPins()
     {
         if (gMap != null) {
@@ -172,5 +167,20 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, DBObse
                 mMarkers.put(marker,posto.uid);
             }
         }
+    }
+
+    @Override
+    public void dataRemedioUpdated() {
+
+    }
+
+    @Override
+    public void userUpdated() {
+
+    }
+
+    @Override
+    public void postosUpdated() {
+        addPins();
     }
 }

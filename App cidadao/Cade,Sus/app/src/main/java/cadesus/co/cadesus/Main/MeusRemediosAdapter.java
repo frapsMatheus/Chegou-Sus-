@@ -48,9 +48,9 @@ public class MeusRemediosAdapter extends RecyclerView.Adapter<RemediosHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RemediosHolder holder, final int position) {
+    public void onBindViewHolder(final RemediosHolder holder, final int position) {
         View view = holder.itemView;
-        Remedio remedio = mRemedios.get(position);
+        final Remedio remedio = mRemedios.get(position);
         if (mNotifications.get(remedio.uid) != null) {
             holder.setRemedio(remedio,mQuantidades.get(remedio.uid),mNotifications.get(remedio.uid));
         } else {
@@ -59,6 +59,10 @@ public class MeusRemediosAdapter extends RecyclerView.Adapter<RemediosHolder> {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (mNotifications.get(remedio.uid) != null) {
+                    User.shared().notificacoes.remove(remedio.uid);
+                    DBUser.shared().saveUser();
+                }
                 Intent intent = new Intent(mActivity, PostosComRemedioActivity.class);
                 intent.putExtra("remedioID",mRemedios.get(position).uid);
                 mActivity.startActivity(intent);

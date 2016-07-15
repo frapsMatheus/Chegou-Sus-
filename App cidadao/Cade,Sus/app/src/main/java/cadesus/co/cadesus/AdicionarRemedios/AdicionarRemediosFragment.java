@@ -129,7 +129,17 @@ public class AdicionarRemediosFragment extends Fragment implements AdicionarReme
     }
 
     @Override
-    public void dataUpdated() {
+    public void dataRemedioUpdated() {
         searchList("");
+    }
+
+    @Override
+    public void userUpdated() {
+
+    }
+
+    @Override
+    public void postosUpdated() {
+
     }
 }

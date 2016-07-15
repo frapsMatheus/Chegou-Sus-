@@ -42,11 +42,6 @@ public class PostoInfoFragment extends Fragment implements DBObserver {
         return v;
     }
 
-    @Override
-    public void dataUpdated() {
-        updateView();
-    }
-
     public void setPosto(String postoID)
     {
         mPosto = DBMain.shared().mPostosDeSaude.get(postoID);
@@ -57,5 +52,20 @@ public class PostoInfoFragment extends Fragment implements DBObserver {
         mAdapter = new PostoInfoAdapter(getContext(),mPosto,
                 mPosto.remedios,DBMain.shared().getRemediosForPosto(mPosto.uid));
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void dataRemedioUpdated() {
+
+    }
+
+    @Override
+    public void userUpdated() {
+
+    }
+
+    @Override
+    public void postosUpdated() {
+        updateView();
     }
 }

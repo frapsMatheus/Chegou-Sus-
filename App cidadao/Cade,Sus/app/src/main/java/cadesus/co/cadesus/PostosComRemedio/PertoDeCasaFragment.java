@@ -64,7 +64,17 @@ public class PertoDeCasaFragment extends Fragment implements DBObserver
     }
 
     @Override
-    public void dataUpdated() {
+    public void dataRemedioUpdated() {
+
+    }
+
+    @Override
+    public void userUpdated() {
+
+    }
+
+    @Override
+    public void postosUpdated() {
         updateView();
     }
 }

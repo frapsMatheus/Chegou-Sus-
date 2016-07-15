@@ -85,9 +85,21 @@ public class MeusRemedios extends Fragment implements DBObserver {
     }
 
     @Override
-    public void dataUpdated() {
+    public void dataRemedioUpdated() {
         mAdapter = new MeusRemediosAdapter(DBMain.shared().getRemediosForUser(),
                 User.shared().remedios,getActivity(),User.shared().notificacoes);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void userUpdated() {
+        mAdapter = new MeusRemediosAdapter(DBMain.shared().getRemediosForUser(),
+                User.shared().remedios,getActivity(),User.shared().notificacoes);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void postosUpdated() {
+
     }
 }

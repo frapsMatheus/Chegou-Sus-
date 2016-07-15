@@ -46,6 +46,7 @@ public class MeusPostosFragment extends Fragment implements DBObserver {
     private ArrayList<PostoDeSaude> mPostoSearch;
     private MeusPostosAdapter mAdapter;
     private FloatingActionButton mDone;
+    boolean mFirstTime = true;
 
 
     @Nullable
@@ -144,14 +145,6 @@ public class MeusPostosFragment extends Fragment implements DBObserver {
         DBMain.shared().removeObserver(this);
     }
 
-    @Override
-    public void dataUpdated() {
-        mPostosInitialList = DBMain.shared().mPostosDeSaude;
-        generateChecked();
-        searchList("");
-    }
-
-
     public void generateChecked()
     {
         if (mPostoSelecionado.isEmpty()) {
@@ -174,4 +167,25 @@ public class MeusPostosFragment extends Fragment implements DBObserver {
     }
 
 
+    @Override
+    public void dataRemedioUpdated() {
+
+    }
+
+    @Override
+    public void userUpdated() {
+        if (mFirstTime) {
+            mPostosInitialList = DBMain.shared().mPostosDeSaude;
+            generateChecked();
+            searchList("");
+            mFirstTime = false;
+        }
+    }
+
+    @Override
+    public void postosUpdated() {
+        mPostosInitialList = DBMain.shared().mPostosDeSaude;
+        generateChecked();
+        searchList("");
+    }
 }
