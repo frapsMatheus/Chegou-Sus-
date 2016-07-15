@@ -17,6 +17,7 @@ public class User
 
     public double latitude;
     public double longitude;
+    public String push_token;
 
     public Map<String,Long> remedios = new HashMap<>();
     public List<String> postos_saude = new ArrayList<>();

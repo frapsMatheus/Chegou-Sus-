@@ -2,7 +2,9 @@ package cadesus.co.cadesus.DB.Entidades;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,8 +14,7 @@ import java.util.Map;
 public class PostoDeSaude {
 
     public  String uid;
-    public double latitude;
-    public double longitude;
+    public List<Double> location;
     public String nome;
     public String endereco;
     public String cep;

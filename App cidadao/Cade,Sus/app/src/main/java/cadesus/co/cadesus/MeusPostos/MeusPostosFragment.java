@@ -1,4 +1,4 @@
-package cadesus.co.cadesus.AdicionarRemedios;
+package cadesus.co.cadesus.MeusPostos;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -15,45 +15,68 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import cadesus.co.cadesus.BuildConfig;
 import cadesus.co.cadesus.DB.DBMain;
 import cadesus.co.cadesus.DB.DBObserver;
 import cadesus.co.cadesus.DB.DBUser;
-import cadesus.co.cadesus.DB.Entidades.Remedio;
+import cadesus.co.cadesus.DB.Entidades.PostoDeSaude;
 import cadesus.co.cadesus.DB.Entidades.User;
 import cadesus.co.cadesus.R;
 
 /**
- * Created by fraps on 7/13/16.
+ * Created by fraps on 7/14/16.
  */
-public class AdicionarRemediosFragment extends Fragment implements AdicionarRemedioCallback,
-        DBObserver {
+public class MeusPostosFragment extends Fragment implements DBObserver {
 
     public static final String FRAGMENT_TAG =
             BuildConfig.APPLICATION_ID + ".FragmentTag";
 
-    LinkedHashMap<String,Remedio> mRemediosInitialList = new LinkedHashMap<>();
-    ArrayList<Remedio> mRemedioSearch = new ArrayList<>();
-    AdicionarRemediosAdapter mAdapter;
     RecyclerView mRecyclerView;
+    LinkedHashMap<String, PostoDeSaude> mPostosInitialList = new LinkedHashMap<>();
+    LinkedHashMap<String, Boolean> mPostoSelecionado = new LinkedHashMap<>();
 
     private RecyclerView.LayoutManager mRecyclerLayout;
+    private ArrayList<PostoDeSaude> mPostoSearch;
+    private MeusPostosAdapter mAdapter;
+    private FloatingActionButton mDone;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_just_recyclerview, container, false);
+        View v = inflater.inflate(R.layout.fragment_recyclerview, container, false);
         setHasOptionsMenu(true);
-        mRecyclerView = (RecyclerView)v.findViewById(R.id.layout_recyclerView);
-        mRemediosInitialList = DBMain.shared().mRemedios;
+        mRecyclerView = (RecyclerView)v.findViewById(R.id.fragment_recycler);
+        mPostosInitialList = DBMain.shared().mPostosDeSaude;
         mRecyclerLayout = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mRecyclerLayout);
+        generateChecked();
         searchList("");
         DBMain.shared().subscribeToObserver(this);
+        mDone = (FloatingActionButton)v.findViewById(R.id.fab);
+        mDone.setImageResource(R.drawable.check_mark);
+        mDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                User.shared().postos_saude.clear();
+                for (Map.Entry<String,Boolean> pair : mPostoSelecionado.entrySet())
+                {
+                    if (pair.getValue()) {
+                        User.shared().adicionarPosto(pair.getKey());
+                    }
+                }
+                DBUser.shared().saveUser();
+                getActivity().finish();
+            }
+        });
         return v;
     }
 
@@ -97,7 +120,22 @@ public class AdicionarRemediosFragment extends Fragment implements AdicionarReme
     @Override
     public void onStart() {
         super.onStart();
-        ((AdicionarRemediosActivity)getActivity()).getSupportActionBar().show();
+        ((MeusPostosActivity)getActivity()).getSupportActionBar().show();
+    }
+
+    private void searchList(String text)
+    {
+//        TODO: Add section
+        ArrayList<PostoDeSaude> postosAtuais = new ArrayList<PostoDeSaude>(mPostosInitialList.values());
+        mPostoSearch = new ArrayList<PostoDeSaude>();
+        for (PostoDeSaude posto : postosAtuais) {
+            if (posto.nome.toLowerCase().contains(text.toLowerCase()) ||
+                    posto.endereco.toLowerCase().contains(text.toLowerCase())) {
+                mPostoSearch.add(posto);
+            }
+        }
+        mAdapter = new MeusPostosAdapter(mPostoSearch,mPostoSelecionado);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -106,30 +144,34 @@ public class AdicionarRemediosFragment extends Fragment implements AdicionarReme
         DBMain.shared().removeObserver(this);
     }
 
-    private void searchList(String text)
-    {
-//        TODO: Add section
-        ArrayList<Remedio> remediosAtuais = new ArrayList<Remedio>(mRemediosInitialList.values());
-        mRemedioSearch = new ArrayList<Remedio>();
-        for (Remedio remedio : remediosAtuais) {
-            if (remedio.patologia.toLowerCase().contains(text.toLowerCase()) ||
-                    remedio.principio_ativo.toLowerCase().contains(text.toLowerCase())) {
-                mRemedioSearch.add(remedio);
-            }
-        }
-        mAdapter = new AdicionarRemediosAdapter(mRemedioSearch,getActivity(),this);
-        mRecyclerView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void remedioAdicionado(Remedio remedio, int quantidade) {
-        User.shared().adicionarRemedio(remedio.uid,Long.valueOf(quantidade));
-        DBUser.shared().saveUser();
-        getActivity().finish();
-    }
-
     @Override
     public void dataUpdated() {
+        mPostosInitialList = DBMain.shared().mPostosDeSaude;
+        generateChecked();
         searchList("");
     }
+
+
+    public void generateChecked()
+    {
+        if (mPostoSelecionado.isEmpty()) {
+
+            for (PostoDeSaude posto : mPostosInitialList.values()) {
+                mPostoSelecionado.put(posto.uid,false);
+            }
+            if (User.shared().postos_saude.isEmpty()) {
+                LinkedHashMap<PostoDeSaude,Double> postoDeSaudePertoDeMim = DBMain.shared()
+                        .getPostosCloseToLocation(new LatLng(User.shared().latitude, User.shared().longitude));
+                for (PostoDeSaude posto : postoDeSaudePertoDeMim.keySet()) {
+                    mPostoSelecionado.put(posto.uid,true);
+                }
+            } else {
+                for (String postoUID : User.shared().postos_saude) {
+                    mPostoSelecionado.put(postoUID,true);
+                }
+            }
+        }
+    }
+
+
 }

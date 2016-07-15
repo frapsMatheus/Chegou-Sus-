@@ -51,6 +51,8 @@
         <activity android:name=".Login.LoginActivity"></activity>
         <activity android:name=".PostosComRemedio.PostosComRemedioActivity"></activity>
         <activity android:name=".AdicionarRemedios.AdicionarRemediosActivity"></activity>
+        <activity android:name=".MeusPostos.MeusPostosActivity"></activity>
+        <activity android:name=".PostoInfo.PostoInfoActivity"></activity>
 
         <activity
             android:name=".Main.MainActivity">

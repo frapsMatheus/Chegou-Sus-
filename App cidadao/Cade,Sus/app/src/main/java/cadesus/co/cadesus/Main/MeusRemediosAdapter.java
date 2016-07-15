@@ -2,6 +2,7 @@ package cadesus.co.cadesus.Main;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,18 +11,18 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import cadesus.co.cadesus.DB.DBUser;
 import cadesus.co.cadesus.DB.Entidades.Remedio;
 import cadesus.co.cadesus.DB.Entidades.User;
+import cadesus.co.cadesus.PostosComRemedio.PostosComRemedioActivity;
 import cadesus.co.cadesus.R;
 
 /**
  * Created by fraps on 7/14/16.
  */
-public class MeusRemediosAdapter extends RecyclerView.Adapter<MeusRemediosHolder> {
+public class MeusRemediosAdapter extends RecyclerView.Adapter<RemediosHolder> {
 
     private final Activity mActivity;
     private Map<String,Long> mQuantidades;
@@ -36,21 +37,23 @@ public class MeusRemediosAdapter extends RecyclerView.Adapter<MeusRemediosHolder
 
 
     @Override
-    public MeusRemediosHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RemediosHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cell_remedio, parent, false);
-        MeusRemediosHolder holder = new MeusRemediosHolder(view);
+        RemediosHolder holder = new RemediosHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(MeusRemediosHolder holder, final int position) {
+    public void onBindViewHolder(RemediosHolder holder, final int position) {
         View view = holder.itemView;
         holder.setRemedio(mRemedios.get(position),mQuantidades.get(mRemedios.get(position).uid));
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(mActivity, PostosComRemedioActivity.class);
+                intent.putExtra("remedioID",mRemedios.get(position).uid);
+                mActivity.startActivity(intent);
             }
         });
         View.OnClickListener onEditClick = new View.OnClickListener() {

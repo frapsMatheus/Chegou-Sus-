@@ -29,6 +29,7 @@ import cadesus.co.cadesus.DB.DBMain;
 import cadesus.co.cadesus.DB.DBObserver;
 import cadesus.co.cadesus.DB.Entidades.PostoDeSaude;
 import cadesus.co.cadesus.Login.LoginActivity;
+import cadesus.co.cadesus.PostoInfo.PostoInfoActivity;
 import cadesus.co.cadesus.R;
 
 public class MapsFragment extends Fragment implements OnMapReadyCallback, DBObserver {
@@ -146,6 +147,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, DBObse
             @Override
             public void onInfoWindowClick(Marker marker) {
                 String postoId = mMarkers.get(marker);
+                Intent intent = new Intent(getActivity(), PostoInfoActivity.class);
+                intent.putExtra("postoID",postoId);
+                startActivity(intent);
             }
         });
     }
@@ -162,7 +166,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, DBObse
             mMarkers.clear();
             for (PostoDeSaude posto : DBMain.shared().mPostosDeSaude.values()) {
                 Marker marker = gMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(posto.latitude, posto.longitude))
+                        .position(new LatLng(posto.location.get(0), posto.location.get(1)))
                         .title(posto.nome).snippet(posto.endereco).icon(BitmapDescriptorFactory
                                 .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
                 mMarkers.put(marker,posto.uid);

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:clickable="true">
+<LinearLayout
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="66dp"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:layout_margin="8dp">
 
     <LinearLayout
         android:orientation="vertical"
@@ -28,11 +34,5 @@
             android:visibility="visible" />
     </LinearLayout>
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/cell_posto_checkbox"
-        android:checked="false"
-        android:visibility="gone" />
-
 </LinearLayout>
+    </android.support.v7.widget.CardView>

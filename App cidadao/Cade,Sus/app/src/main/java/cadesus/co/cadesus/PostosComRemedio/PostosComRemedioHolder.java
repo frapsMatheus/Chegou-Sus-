@@ -1,22 +1,22 @@
-package cadesus.co.cadesus.Cells;
+package cadesus.co.cadesus.PostosComRemedio;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import cadesus.co.cadesus.DB.Entidades.PostoDeSaude;
 import cadesus.co.cadesus.R;
 
 /**
  * Created by fraps on 7/12/16.
  */
-public class PostosHolder extends RecyclerView.ViewHolder {
+public class PostosComRemedioHolder extends RecyclerView.ViewHolder {
 
     private TextView mName;
     private TextView mDistance;
-    private CheckBox mSelected;
 
-    public PostosHolder(View itemView) {
+    public PostosComRemedioHolder(View itemView) {
         super(itemView);
         prepareView(itemView);
     }
@@ -25,6 +25,11 @@ public class PostosHolder extends RecyclerView.ViewHolder {
     {
         mName = (TextView)v.findViewById(R.id.cell_post_nome);
         mDistance = (TextView)v.findViewById(R.id.cell_posto_distancia);
-        mSelected = (CheckBox)v.findViewById(R.id.cell_posto_checkbox);
+    }
+
+    public void setView(PostoDeSaude posto, double distance)
+    {
+        mName.setText(posto.nome);
+        mDistance.setText(String.format("Disntância até o local de %.2f", distance/1000) + " Km.");
     }
 }

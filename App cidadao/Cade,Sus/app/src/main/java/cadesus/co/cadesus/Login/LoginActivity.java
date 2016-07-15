@@ -15,10 +15,12 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import cadesus.co.cadesus.DB.DBLogin;
 import cadesus.co.cadesus.DB.DBUser;
 import cadesus.co.cadesus.DB.Entidades.User;
+import cadesus.co.cadesus.MeusPostos.MeusPostosActivity;
 import cadesus.co.cadesus.R;
 
 /**
@@ -171,12 +173,14 @@ public class LoginActivity extends Activity implements LoginCallback {
                 }
             }
         });
-        builder.setNegativeButton("Não selecionar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
+//        builder.setNegativeButton("Não selecionar", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                Intent intent = new Intent(LoginActivity.this, MeusPostosActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
         builder.show();
     }
 
@@ -195,12 +199,14 @@ public class LoginActivity extends Activity implements LoginCallback {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CASA_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(data, this);
-                String toastMsg = String.format("Place: %s", place.getName());
+                Place place = PlacePicker.getPlace(this,data);
                 User user = User.shared();
+                user.push_token = FirebaseInstanceId.getInstance().getToken();
                 user.setLocation(place.getLatLng().latitude, place.getLatLng().longitude);
                 DBUser.shared().saveUser();
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, MeusPostosActivity.class);
+                startActivity(intent);
+                finish();
             }
         }
     }

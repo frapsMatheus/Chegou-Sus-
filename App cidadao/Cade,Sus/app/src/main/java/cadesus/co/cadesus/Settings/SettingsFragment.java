@@ -12,6 +12,9 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import cadesus.co.cadesus.DB.DBLogin;
+import cadesus.co.cadesus.DB.DBUser;
+import cadesus.co.cadesus.DB.Entidades.User;
+import cadesus.co.cadesus.MeusPostos.MeusPostosActivity;
 import cadesus.co.cadesus.R;
 
 /**
@@ -43,6 +46,16 @@ public class SettingsFragment extends PreferenceFragment {
             }
         });
 
+        Preference meusPostos = findPreference("pref_key_meus_postos");
+        meusPostos.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent myIntent = new Intent(getActivity(), MeusPostosActivity.class);
+                startActivity(myIntent);
+                return true;
+            }
+        });
+
         Preference logout = findPreference("pref_key_logout");
         logout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -60,9 +73,11 @@ public class SettingsFragment extends PreferenceFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CASA_PICKER_REQUEST) {
             if (resultCode == getActivity().RESULT_OK) {
-                Place place = PlacePicker.getPlace(data, getActivity());
-                String toastMsg = String.format("Place: %s", place.getName());
-                Toast.makeText(getActivity(), toastMsg, Toast.LENGTH_LONG).show();
+                Place place = PlacePicker.getPlace(getActivity(),data);
+                User user = User.shared();
+                user.setLocation(place.getLatLng().latitude, place.getLatLng().longitude);
+                DBUser.shared().saveUser();
+                Toast.makeText(getActivity(), "Localização redefinida.", Toast.LENGTH_LONG).show();
             }
         }
     }
